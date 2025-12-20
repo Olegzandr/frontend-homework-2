@@ -1,0 +1,682 @@
+/* импорт шрифта */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Сброс стилей */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  color: #1f2933;
+  background-color: #f5f5f5;
+}
+
+/* Базовые элементы */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+/* Общий контейнер для ширины страницы */
+.header,
+main,
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 16px;
+}
+
+/* Общие отступы для секций */
+section {
+  padding-block: 40px;
+}
+
+/* (Блок .header) */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header__nav-list {
+  display: flex;
+  gap: 16px;
+}
+
+.header__nav-link {
+  display: inline-block;
+  padding: 8px 4px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.header__nav-item--active .header__nav-link {
+  color: #2c5530;
+  border-color: #2c5530;
+}
+
+.header__nav-link:hover {
+  color: #2c5530;
+  background-color: #f3f4f6;
+}
+
+.header__nav-link:focus {
+  outline: 2px solid #2c5530;
+  outline-offset: 2px;
+}
+
+.header__nav-link:active {
+  transform: translateY(1px);
+}
+
+/* Кнопка "Корзина" */
+.header__cart-button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background-color: #2c5530;
+  color: #ffffff;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.header__cart-button:hover {
+  background-color: #214024;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.header__cart-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.header__cart-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* (Блок .hero) */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding-block: 56px;
+}
+
+.hero__content {
+  flex: 1 1 320px;
+}
+
+.hero__image {
+  flex: 1 1 320px;
+}
+
+.hero__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.hero__title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.hero__text {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 24px;
+  max-width: 480px;
+}
+
+.hero__cta {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background-color: #2c5530;
+  color: #ffffff;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.hero__cta:hover {
+  background-color: #214024;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hero__cta:focus {
+  outline: 2px solid #2c5530;
+  outline-offset: 3px;
+}
+
+.hero__cta:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* (Блок .base) */
+.base {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px 24px;
+  margin-bottom: 24px;
+}
+
+.base__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.base__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.base__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.base__list {
+  display: grid;
+  gap: 24px;
+}
+
+/* На широких экранах - несколько колонок */
+@media (min-width: 768px) {
+  .base__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .base__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.base__card {
+  height: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.base__icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.base__card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.base__card-text {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* hover-состояние карточек */
+.base__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* (Блок .choose) */
+.choose {
+  padding-block: 48px;
+}
+
+.choose__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.choose__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.choose__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.choose__products {
+  display: grid;
+  gap: 24px;
+}
+
+/* сетка карточек кофе */
+@media (min-width: 768px) {
+  .choose__products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .choose__products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Карточка продукта */
+.product-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card__image {
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.product-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.product-card__text {
+  font-size: 0.95rem;
+  color: #4b5563;
+  flex-grow: 1;
+}
+
+.product-card__price {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #2c5530;
+  margin-top: 8px;
+}
+
+.product-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Кнопки в карточке продукта */
+.product-card__button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background-color: #2c5530;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.product-card__button--secondary {
+  background-color: #ffffff;
+  color: #2c5530;
+  border: 1px solid #2c5530;
+}
+
+/* состояния кнопок */
+.product-card__button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-card__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.product-card__button:focus {
+  outline: 2px solid #2c5530;
+  outline-offset: 2px;
+}
+
+.product-card__button:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-color: transparent;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* hover у secondary */
+.product-card__button--secondary:hover:not(:disabled) {
+  background-color: #2c5530;
+  color: #ffffff;
+}
+
+/* hover карточки */
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* (Блок .giftset) */
+.giftset {
+  padding-block: 48px;
+}
+
+.giftset__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.giftset__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.giftset__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Карточка подарочного набора */
+.giftset-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.giftset-card__image {
+  flex: 1 1 280px;
+}
+
+.giftset-card__content {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.giftset-card__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.giftset-card__price {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #2c5530;
+}
+
+.giftset-card__text {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.giftset-card__features {
+  margin-top: 4px;
+}
+
+.giftset-card__feature {
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.giftset-card__actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+/* Кнопки в подарочном наборе */
+.giftset-card__button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background-color: #2c5530;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.giftset-card__button--secondary {
+  background-color: #ffffff;
+  color: #2c5530;
+  border: 1px solid #2c5530;
+}
+
+.giftset-card__button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.giftset-card__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.giftset-card__button:focus {
+  outline: 2px solid #2c5530;
+  outline-offset: 2px;
+}
+
+.giftset-card__button:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-color: transparent;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.giftset-card__button--secondary:hover:not(:disabled) {
+  background-color: #2c5530;
+  color: #ffffff;
+}
+
+/* (Блок .combo) */
+.combo {
+  padding-block: 48px;
+}
+
+.combo__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.combo__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.combo__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.combo__grid {
+  display: grid;
+  gap: 24px;
+}
+
+/* сетка комбо-наборов */
+@media (min-width: 768px) {
+  .combo__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Карточка комбо-набора */
+.combo-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.combo-card__image {
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.combo-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.combo-card__text {
+  font-size: 0.95rem;
+  color: #4b5563;
+  flex-grow: 1;
+}
+
+.combo-card__price {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #2c5530;
+}
+
+.combo-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Кнопки в комбо-наборах */
+.combo-card__button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background-color: #2c5530;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.combo-card__button--secondary {
+  background-color: #ffffff;
+  color: #2c5530;
+  border: 1px solid #2c5530;
+}
+
+.combo-card__button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.combo-card__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.combo-card__button:focus {
+  outline: 2px solid #2c5530;
+  outline-offset: 2px;
+}
+
+.combo-card__button:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-color: transparent;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.combo-card__button--secondary:hover:not(:disabled) {
+  background-color: #2c5530;
+  color: #ffffff;
+}
+
+/* hover карточки */
+.combo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* (Блок .footer) */
+.footer {
+  padding-block: 24px;
+  margin-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.footer__text {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
