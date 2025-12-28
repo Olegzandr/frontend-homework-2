@@ -226,8 +226,9 @@ section {
   color: #111827;
 }
 
-.base__list {
+.base__list{
   display: grid;
+  grid-template-columns: 1fr;
   gap: 24px;
 }
 
@@ -564,15 +565,23 @@ section {
 }
 
 .combo__grid {
-  display: grid;
-  gap: 24px;
+  column-count: 1;
+  column-gap: 24px;
 }
 
-/* сетка комбо-наборов */
 @media (min-width: 768px) {
-  .combo__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  .combo__grid { column-count: 2; }
+}
+
+@media (min-width: 1024px) {
+  .combo__grid { column-count: 3; }
+}
+
+.combo__grid > .combo-card {
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  margin: 0 0 24px;
 }
 
 /* Карточка комбо-набора */
@@ -679,4 +688,58 @@ section {
   text-align: center;
   font-size: 0.9rem;
   color: #6b7280;
+}
+
+@media (max-width: 1199px) {
+  section { padding-block: 32px; }
+  .hero { padding-block: 40px; }
+}
+
+@media (max-width: 991px) {
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__text { max-width: none; }
+}
+
+@media (max-width: 767px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .header__nav-list {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header__nav-link {
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .header__cart-button {
+    width: 100%;
+  }
+
+  .product-card__actions,
+  .combo-card__actions,
+  .giftset-card__actions {
+    flex-direction: column;
+  }
+
+  .hero__title { font-size: 1.75rem; }
+}
+
+@media (max-width: 575px) {
+  section { padding-block: 24px; }
+
+  .base { padding: 24px 16px; }
+  .giftset-card { padding: 16px; }
+
+  .hero__title { font-size: 1.5rem; }
 }
