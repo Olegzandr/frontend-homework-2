@@ -48,25 +48,19 @@ document.addEventListener('keydown', (e) => {
 const scrollTopButton = document.getElementById('scrollTop');
 
 if (scrollTopButton) {
-  const getY = () =>
-    window.pageYOffset ||
-    document.documentElement.scrollTop ||
-    document.body.scrollTop ||
-    0;
+  const scrollEl = document.scrollingElement || document.documentElement;
 
-  const update = () => {
-    scrollTopButton.classList.toggle('visible', getY() > 100);
+  const updateScrollBtn = () => {
+    scrollTopButton.classList.toggle('visible', scrollEl.scrollTop > 100);
   };
 
-  window.addEventListener('scroll', update, { passive: true });
-  document.addEventListener('scroll', update, { passive: true }); // важно для мобилок
-  window.addEventListener('pageshow', update);
-  update();
+  window.addEventListener('scroll', updateScrollBtn, { passive: true });
+  window.addEventListener('pageshow', updateScrollBtn); 
+  updateScrollBtn();
 
   scrollTopButton.addEventListener('click', (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollEl.scrollTop = 0; // fallback
   });
 }
