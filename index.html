@@ -4,13 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REVO coffee</title>
-  <link rel="stylesheet" href="assets/styles/style.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/mobile.css" media="screen and (max-width: 1024px)">
+
 </head>
 
 <body>
 
 <header class="header">
-  <nav class="header__nav">
+  <!-- Гамбургер-кнопка (видна на планшетах и мобильных) -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню" aria-expanded="false">
+    <span class="menu-toggle__line"></span>
+    <span class="menu-toggle__line"></span>
+    <span class="menu-toggle__line"></span>
+  </button>
+
+  <nav class="header__nav" id="mainNav">
     <ul class="header__nav-list">
       <li class="header__nav-item header__nav-item--active">
         <a class="header__nav-link" href="#hero">Главная</a>
@@ -275,5 +284,8 @@
   <p class="footer__text">© Revo Coffee, 2018</p>
 </footer>
 
+<button class="scroll-top" id="scrollTop" aria-label="Наверх">↑</button>
+
+<script src="scripts/menu.js"></script>
 </body>
 </html>
