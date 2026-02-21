@@ -801,7 +801,7 @@ section {
   opacity: 0;
   visibility: hidden;
   transition: 0.3s;
-  z-index: 999;
+  z-index: 2000;
   background: #2c5530;
   color: #fff;
   display: flex;

@@ -37,11 +37,20 @@ document.addEventListener('keydown', (e) => {
 });
 
 const scrollTopButton = document.getElementById('scrollTop');
+
 if (scrollTopButton) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) scrollTopButton.classList.add('visible');
-    else scrollTopButton.classList.remove('visible');
-  });
+  const updateScrollBtn = () => {
+    const y =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    scrollTopButton.classList.toggle('visible', y > 100);
+  };
+
+  window.addEventListener('scroll', updateScrollBtn, { passive: true });
+  window.addEventListener('load', updateScrollBtn); // сразу проверить при загрузке
 
   scrollTopButton.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
