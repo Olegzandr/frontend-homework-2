@@ -48,19 +48,24 @@ document.addEventListener('keydown', (e) => {
 const scrollTopButton = document.getElementById('scrollTop');
 
 if (scrollTopButton) {
-  const scrollEl = document.scrollingElement || document.documentElement;
-
   const updateScrollBtn = () => {
-    scrollTopButton.classList.toggle('visible', scrollEl.scrollTop > 100);
+    const y =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    scrollTopButton.classList.toggle('visible', y > 100);
   };
 
   window.addEventListener('scroll', updateScrollBtn, { passive: true });
-  window.addEventListener('pageshow', updateScrollBtn); 
-  updateScrollBtn();
+  window.addEventListener('load', updateScrollBtn); // сразу проверить при загрузке
 
   scrollTopButton.addEventListener('click', (e) => {
     e.preventDefault();
-    scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
-    scrollEl.scrollTop = 0; // fallback
+
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   });
 }
