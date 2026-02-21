@@ -1,69 +1,78 @@
-// if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
 
-// window.addEventListener('load', () => {
-//   if (location.hash) {
-//     history.replaceState(null, '', location.pathname + location.search);
-//   }
-//   window.scrollTo(0, 0);
-// });
+  // ===== МЕНЮ =====
+  if (menuToggle && mainNav) {
+    // создаём затемнение
+    const navOverlay = document.createElement('div');
+    navOverlay.className = 'nav-overlay';
+    document.body.appendChild(navOverlay);
 
-const menuToggle = document.getElementById('menuToggle');
-const mainNav = document.getElementById('mainNav');
+    function toggleMenu() {
+      const isOpen = mainNav.classList.contains('active');
 
-// создаём затемнение
-const navOverlay = document.createElement('div');
-navOverlay.className = 'nav-overlay';
-document.body.appendChild(navOverlay);
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
 
-function toggleMenu() {
-  const isOpen = mainNav.classList.contains('active');
+      // блокируем скролл когда меню открыто
+      document.body.style.overflow = isOpen ? '' : 'hidden';
 
-  menuToggle.classList.toggle('active');
-  mainNav.classList.toggle('active');
-  navOverlay.classList.toggle('active');
-
-  // блокируем скролл когда меню открыто
-  document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-
-menuToggle.addEventListener('click', toggleMenu);
-navOverlay.addEventListener('click', toggleMenu);
-
-// закрытие по клику на ссылку меню (на мобильных)
-document.querySelectorAll('.header__nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 768 && mainNav.classList.contains('active')) {
-      toggleMenu();
+      // для доступности
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
     }
-  });
-});
 
-// закрытие по Esc
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && mainNav.classList.contains('active')) {
-    toggleMenu();
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // закрытие по клику на ссылку меню (на мобильных)
+    document.querySelectorAll('.header__nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768 && mainNav.classList.contains('active')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    // закрытие по Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
+  }
+
+  // ===== КНОПКА "НАВЕРХ" =====
+  const scrollTopButton = document.getElementById('scrollTop');
+
+  if (scrollTopButton) {
+    const updateScrollBtn = () => {
+      const y =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+
+      scrollTopButton.classList.toggle('visible', y > 300);
+    };
+
+    window.addEventListener('scroll', updateScrollBtn, { passive: true });
+    window.addEventListener('pageshow', updateScrollBtn);
+    updateScrollBtn(); // важно для /#choose
+
+    scrollTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // основной способ
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
+      // фоллбек для браузеров, где smooth/scrollTo глючит
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, 400);
+    });
   }
 });
-
-const scrollTopButton = document.getElementById('scrollTop');
-
-if (scrollTopButton) {
-  const updateScrollBtn = () => {
-    const y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    scrollTopButton.classList.toggle('visible', y > 300); // по ПЗ5
-  };
-
-  window.addEventListener('scroll', updateScrollBtn, { passive: true });
-  window.addEventListener('pageshow', updateScrollBtn);
-  updateScrollBtn();
-
-  scrollTopButton.addEventListener('click', () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-
-    // фоллбек для браузеров, где smooth/scrollTo глючит
-    setTimeout(() => {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 400);
-  });
-}
