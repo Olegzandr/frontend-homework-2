@@ -39,7 +39,7 @@ document.addEventListener('keydown', (e) => {
 const scrollTopButton = document.getElementById('scrollTop');
 if (scrollTopButton) {
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) scrollTopButton.classList.add('visible');
+    if (window.scrollY > 100) scrollTopButton.classList.add('visible');
     else scrollTopButton.classList.remove('visible');
   });
 
