@@ -43,49 +43,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== КНОПКА "НАВЕРХ" =====
-  const scrollTopButton = document.getElementById('scrollTop');
+    // ===== КНОПКА "НАВЕРХ" =====
+    const scrollTopButton = document.getElementById('scrollTop');
 
-  if (scrollTopButton) {
-    const getY = () =>
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
+        if (scrollTopButton) {
+        // 1) Находим реальный скролл-контейнер:
+        // если страница скроллится обычно — это window,
+        // если скролл внутри обёртки (overflow:auto) — найдём её.
+        const getScrollParent = (el) => {
+            let p = el.parentElement;
+            while (p) {
+            const cs = getComputedStyle(p);
+            const overflowY = cs.overflowY;
+            if ((overflowY === 'auto' || overflowY === 'scroll') && p.scrollHeight > p.clientHeight) {
+                return p;
+            }
+            p = p.parentElement;
+            }
+            return window; // fallback
+        };
 
-    const updateScrollBtn = () => {
-      scrollTopButton.classList.toggle('visible', getY() > 300);
-    };
+        // Часто скролл-контейнером является document.scrollingElement
+        // (на всякий случай берём его как приоритет)
+        const scrollingEl = document.scrollingElement || document.documentElement;
+        const possibleContainer = getScrollParent(scrollTopButton);
+        const scrollContainer = (possibleContainer !== window) ? possibleContainer : window;
 
-  // обычный скролл
-    window.addEventListener('scroll', updateScrollBtn, { passive: true });
+        const getY = () => {
+            if (scrollContainer === window) {
+            return window.scrollY || window.pageYOffset || scrollingEl.scrollTop || 0;
+            }
+            return scrollContainer.scrollTop || 0;
+        };
 
-  // ключевое: когда страница открыта сразу с #hash (/#choose)
-    window.addEventListener('load', () => {
-      requestAnimationFrame(updateScrollBtn);
-      setTimeout(updateScrollBtn, 50);
-      setTimeout(updateScrollBtn, 200);
-    });
+        const updateScrollBtn = () => {
+            scrollTopButton.classList.toggle('visible', getY() > 300);
+        };
 
-  // если hash меняется (кликаешь по меню)
-    window.addEventListener('hashchange', () => {
-      requestAnimationFrame(updateScrollBtn);
-      setTimeout(updateScrollBtn, 50);
-    });
+        // 2) Слушаем скролл там, где он реально происходит
+        const target = (scrollContainer === window) ? window : scrollContainer;
+        target.addEventListener('scroll', updateScrollBtn, { passive: true });
 
-  // возврат из bfcache (Safari/мобилки)
-    window.addEventListener('pageshow', updateScrollBtn);
+        // 3) Доп. триггеры (когда скролл меняется без "ручного" scroll event)
+        window.addEventListener('load', () => requestAnimationFrame(updateScrollBtn));
+        window.addEventListener('resize', updateScrollBtn);
+        window.addEventListener('hashchange', () => {
+            requestAnimationFrame(updateScrollBtn);
+            setTimeout(updateScrollBtn, 200); // на случай плавного скролла/якорей
+        });
+        window.addEventListener('pageshow', updateScrollBtn);
 
-    updateScrollBtn();
+        // 4) Инициализация
+        updateScrollBtn();
 
-    scrollTopButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-      setTimeout(() => {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        window.scrollTo(0, 0);
-      }, 400);
-    });
-  }
+        // 5) Клик "наверх"
+        scrollTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (scrollContainer === window) {
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // страховка для Safari/мобилок
+            setTimeout(() => {
+            if (scrollContainer === window) {
+                scrollingEl.scrollTop = 0;
+                window.scrollTo(0, 0);
+            } else {
+                scrollContainer.scrollTop = 0;
+            }
+            updateScrollBtn();
+            }, 350);
+        });
+    }
 });
