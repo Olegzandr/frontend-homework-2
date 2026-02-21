@@ -48,24 +48,25 @@ document.addEventListener('keydown', (e) => {
 const scrollTopButton = document.getElementById('scrollTop');
 
 if (scrollTopButton) {
-  const updateScrollBtn = () => {
-    const y =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
+  const scrollEl = document.scrollingElement || document.documentElement;
 
-    scrollTopButton.classList.toggle('visible', y > 100);
+  const update = () => {
+    scrollTopButton.classList.toggle('visible', scrollEl.scrollTop > 100);
   };
 
-  window.addEventListener('scroll', updateScrollBtn, { passive: true });
-  window.addEventListener('load', updateScrollBtn); // сразу проверить при загрузке
+  // основные события
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('touchmove', update, { passive: true }); // мобилка
+  window.addEventListener('pageshow', update);                    // возврат из кэша
+  update();
+
+  // fallback на случай если события не приходят
+  setInterval(update, 250);
 
   scrollTopButton.addEventListener('click', (e) => {
     e.preventDefault();
-
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
+    scrollEl.scrollTop = 0;   // основной способ
+    window.scrollTo(0, 0);    // запасной
     document.body.scrollTop = 0;
   });
 }
