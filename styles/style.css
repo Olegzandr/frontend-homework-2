@@ -800,6 +800,7 @@ section {
   font-size: 24px;
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: 0.3s;
   z-index: 2000;
   background: #2c5530;
@@ -813,4 +814,5 @@ section {
 .scroll-top.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }

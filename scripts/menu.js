@@ -48,25 +48,22 @@ document.addEventListener('keydown', (e) => {
 const scrollTopButton = document.getElementById('scrollTop');
 
 if (scrollTopButton) {
-  const scrollEl = document.scrollingElement || document.documentElement;
-
-  const update = () => {
-    scrollTopButton.classList.toggle('visible', scrollEl.scrollTop > 100);
+  const updateScrollBtn = () => {
+    const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    scrollTopButton.classList.toggle('visible', y > 300); // по ПЗ5
   };
 
-  // основные события
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('touchmove', update, { passive: true }); // мобилка
-  window.addEventListener('pageshow', update);                    // возврат из кэша
-  update();
+  window.addEventListener('scroll', updateScrollBtn, { passive: true });
+  window.addEventListener('pageshow', updateScrollBtn);
+  updateScrollBtn();
 
-  // fallback на случай если события не приходят
-  setInterval(update, 250);
+  scrollTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
-  scrollTopButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    scrollEl.scrollTop = 0;   // основной способ
-    window.scrollTo(0, 0);    // запасной
-    document.body.scrollTop = 0;
+    // фоллбек для браузеров, где smooth/scrollTo глючит
+    setTimeout(() => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 400);
   });
 }
