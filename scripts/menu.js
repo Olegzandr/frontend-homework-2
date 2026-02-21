@@ -1,3 +1,12 @@
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+window.addEventListener('load', () => {
+  if (location.hash) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  window.scrollTo(0, 0);
+});
+
 const menuToggle = document.getElementById('menuToggle');
 const mainNav = document.getElementById('mainNav');
 
