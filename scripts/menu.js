@@ -52,7 +52,11 @@ if (scrollTopButton) {
   window.addEventListener('scroll', updateScrollBtn, { passive: true });
   window.addEventListener('load', updateScrollBtn); // сразу проверить при загрузке
 
-  scrollTopButton.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollTopButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   });
 }
