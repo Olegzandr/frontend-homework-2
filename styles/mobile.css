@@ -1,7 +1,7 @@
 @media (max-width: 768px) {
   .menu-toggle { 
     display: flex;
-    z-index: 1002;  
+    z-index: 1002;
   }
 
   .header {
@@ -15,23 +15,22 @@
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 1000;
+    z-index: 999; /* ниже header */
   }
 
-  .nav-overlay.active {
-    display: block;
-  }
+  .nav-overlay.active { display: block; }
 
   .header__nav {
     position: fixed;
     top: 0;
     right: -100%;
+    left: auto;
     width: 280px;
     height: 100vh;
     background: #fff;
     padding: 80px 20px;
     transition: right 0.3s ease;
-    z-index: 1001;
+    z-index: 1001; /* выше overlay */
     overflow-y: auto;
   }
 
