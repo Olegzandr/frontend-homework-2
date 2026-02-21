@@ -10,3 +10,6 @@
 ## Ссылка на проект
 
 Сайт доступен по адресу: https://olegzandr.github.io/frontend-homework-2/
+
+### qr-код
+<img width="1980" height="1980" alt="7e5ce44e31b33b1560b28aad899ad0d3" src="https://github.com/user-attachments/assets/22f0ac3f-ffd9-48fe-93ba-c4aaa2fdc3e7" />
